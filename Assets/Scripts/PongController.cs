@@ -1,5 +1,6 @@
 // Ailand Parriott
 // 23.05.25
+// 23.05.25
 // Adds controls and functionality to pong bars
 
 using System.Collections;
@@ -11,9 +12,9 @@ public class PongController : MonoBehaviour
     public bool isPlayerOne;
 
     public float acceleration = 4f;
-    public float friction = 1f;
+    public float friction = 4f;
 
-    Rigidbody2D pongBar;
+    Rigidbody2D pongBarRB;
 
     Vector2 forceVector;
     Vector2 frictionVector;
@@ -21,8 +22,8 @@ public class PongController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // assigns pongBar to given Pong RB
-        pongBar = GetComponent<Rigidbody2D>();
+        // assigns pongBarRB to given Pong RB
+        pongBarRB = GetComponent<Rigidbody2D>();
 
     }
 
@@ -59,13 +60,13 @@ public class PongController : MonoBehaviour
                 forceVector = new Vector2(0f, -1 * acceleration);
             }
         }
-        pongBar.AddForce(forceVector);
+        pongBarRB.AddForce(forceVector);
         forceVector = Vector2.zero;
 
-        // pongBar velocity normalized returns vector of direction of velocity 
+        // pongBarRB velocity normalized returns vector of direction of velocity 
         // makes sure the friction is always in opposite direction
-        frictionVector = -pongBar.velocity.normalized * friction;
-        pongBar.AddForce(frictionVector);
+        frictionVector = -pongBarRB.velocity.normalized * friction;
+        pongBarRB.AddForce(frictionVector);
         frictionVector = Vector2.zero;
     }
 }
