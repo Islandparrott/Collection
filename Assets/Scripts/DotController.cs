@@ -17,18 +17,25 @@ public class DotController : MonoBehaviour
 
     Rigidbody2D pongDotRB;
 
-    Vector2 moveDirection;
+    Vector2 startDirection;
     Vector2 moveVector;
 
     // Start is called before the first frame update
     void Start()
     {
-        randX = Random.Range(-1f, 1f);
-        randY = Random.Range(-1f, 1f);
-        moveDirection = new Vector2(randX, randY).normalized * speed;
-
         pongDotRB = GetComponent<Rigidbody2D>();
-        pongDotRB.AddForce(moveDirection);
+
+        randX = Random.Range(-1f, 1f);
+        randY = Random.Range(-.5f, .5f);
+
+        // = = = = = =
+        //randX = .25f;
+        //randY = 1f;
+        // = = = = = =
+
+        startDirection = new Vector2(randX, randY).normalized * speed;
+
+        pongDotRB.AddForce(startDirection);
     }
 
     // Update is called once per frame
@@ -40,25 +47,10 @@ public class DotController : MonoBehaviour
     void FixedUpdate()
     {   
         
+        Vector2 dotVelocity = pongDotRB.velocity;
+
     }
 
-    // called whenever collides with another object
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        Debug.Log("Collision detected!");
-        if(collision.gameObject.CompareTag("WallNS") && !collided)
-        {
-            // tried using velocity to update location, just use force.
-            Vector2 reflectVector = Vector2.Reflect(moveDirection, 
-                    collision.contacts[0].normal);
-            pongDotRB.AddForce(reflectVector, ForceMode2D.Impulse);
 
-            collided = true;
-        }
-    }
 
-    void OnCollisionExit2D(Collision2D collision)
-    {   
-        collided = false;
-    }
 }

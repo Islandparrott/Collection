@@ -11,13 +11,14 @@ public class PongController : MonoBehaviour
 {
     public bool isPlayerOne;
 
-    public float acceleration = 4f;
-    public float friction = 4f;
-
     Rigidbody2D pongBarRB;
 
-    Vector2 forceVector;
-    Vector2 frictionVector;
+    public float friction = .9f;
+
+    public int speed = 24;
+    int input;
+    Vector2 direction;
+    Vector2 pongBarVelocity;
 
     // Start is called before the first frame update
     void Start()
@@ -33,40 +34,43 @@ public class PongController : MonoBehaviour
 
     }
 
+    void movement(int inp)
+    {
+        direction = new Vector2(0f, inp);
+        direction.Normalize();
+        pongBarVelocity = direction * speed;
+        pongBarRB.velocity = pongBarVelocity;
+    }
+
     // good for physics
     void FixedUpdate()
     {
-        // gets movement input up and down
+        // gets direction input up and down
         if (isPlayerOne)
         {
             if (Input.GetKey(KeyCode.W))
             {
-                forceVector = new Vector2(0f, 1 * acceleration);
-                // applying force to bar
+                movement(1);
             } 
             if (Input.GetKey(KeyCode.S))
             {
-                forceVector = new Vector2(0f, -1 * acceleration);
-                // applying force to bar
+                movement(-1);
             }
         } else
         {
             if (Input.GetKey(KeyCode.UpArrow))
             {
-                forceVector = new Vector2(0f, 1 * acceleration);
+                movement(1);
             } 
             if (Input.GetKey(KeyCode.DownArrow))
             {
-                forceVector = new Vector2(0f, -1 * acceleration);
+                movement(-1);
             }
         }
-        pongBarRB.AddForce(forceVector);
-        forceVector = Vector2.zero;
 
-        // pongBarRB velocity normalized returns vector of direction of velocity 
-        // makes sure the friction is always in opposite direction
-        frictionVector = -pongBarRB.velocity.normalized * friction;
-        pongBarRB.AddForce(frictionVector);
-        frictionVector = Vector2.zero;
+        // works for some reason? doesnt apply friction but stops the bars from 
+        // moving
+        pongBarRB.velocity *= friction;
+
     }
 }
