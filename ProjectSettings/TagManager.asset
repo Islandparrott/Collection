@@ -4,8 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - WallEW
   - WallNS
+  - WallE
+  - WallW
+  - Player2
   layers:
   - Default
   - TransparentFX

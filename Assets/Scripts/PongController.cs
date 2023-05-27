@@ -1,6 +1,5 @@
 // Ailand Parriott
 // 23.05.25
-// 23.05.25
 // Adds controls and functionality to pong bars
 
 using System.Collections;
@@ -9,8 +8,7 @@ using UnityEngine;
 
 public class PongController : MonoBehaviour
 {
-    public bool isPlayerOne;
-
+    GameObject pongBarObject;
     Rigidbody2D pongBarRB;
 
     public float friction = .9f;
@@ -23,6 +21,7 @@ public class PongController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        pongBarObject = gameObject;
         // assigns pongBarRB to given Pong RB
         pongBarRB = GetComponent<Rigidbody2D>();
 
@@ -46,7 +45,7 @@ public class PongController : MonoBehaviour
     void FixedUpdate()
     {
         // gets direction input up and down
-        if (isPlayerOne)
+        if (pongBarObject.gameObject.CompareTag("Player"))
         {
             if (Input.GetKey(KeyCode.W))
             {
@@ -56,7 +55,7 @@ public class PongController : MonoBehaviour
             {
                 movement(-1);
             }
-        } else
+        } else if (pongBarObject.gameObject.CompareTag("Player2"))
         {
             if (Input.GetKey(KeyCode.UpArrow))
             {

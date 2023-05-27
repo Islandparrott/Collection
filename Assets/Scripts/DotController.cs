@@ -1,6 +1,5 @@
 // Ailand Parriott
 // 23.05.25
-// 23.05.25
 // functionality for dot
 
 using System.Collections;
@@ -9,6 +8,8 @@ using UnityEngine;
 
 public class DotController : MonoBehaviour
 {
+    public ScoreController scoreController;
+
     bool collided;
 
     public float speed = 4f;
@@ -28,11 +29,6 @@ public class DotController : MonoBehaviour
         randX = Random.Range(-1f, 1f);
         randY = Random.Range(-.5f, .5f);
 
-        // = = = = = =
-        //randX = .25f;
-        //randY = 1f;
-        // = = = = = =
-
         startDirection = new Vector2(randX, randY).normalized * speed;
 
         pongDotRB.AddForce(startDirection);
@@ -46,11 +42,21 @@ public class DotController : MonoBehaviour
 
     void FixedUpdate()
     {   
-        
         Vector2 dotVelocity = pongDotRB.velocity;
 
     }
 
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("WallW"))
+        {
+            // had to use the declared scoreController to call it.
+            scoreController.scoreLeft++;
+        } else if (collision.gameObject.CompareTag("WallE"))
+        {
+            scoreController.scoreRight++;
+        }
+    }
 
 
 }
