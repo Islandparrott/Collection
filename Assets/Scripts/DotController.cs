@@ -1,6 +1,11 @@
 // Ailand Parriott
 // 23.05.25
 // functionality for dot
+//
+// REF
+// | How to make Pong in Unity (Complete Tutorial) 🏓💥
+//  | https://www.youtube.com/watch?v=AcpaYq0ihaM
+
 
 using System.Collections;
 using System.Collections.Generic;
@@ -12,9 +17,11 @@ public class DotController : MonoBehaviour
 
     bool collided;
 
-    public float speed = 4f;
+    float speed = 4f;
     float randX;
     float randY;
+
+    public GameObject pongDotGO;
 
     Rigidbody2D pongDotRB;
 
@@ -24,14 +31,10 @@ public class DotController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        scoreController = GameObject.FindObjectOfType<ScoreController>();
         pongDotRB = GetComponent<Rigidbody2D>();
 
-        randX = Random.Range(-1f, 1f);
-        randY = Random.Range(-.5f, .5f);
-
-        startDirection = new Vector2(randX, randY).normalized * speed;
-
-        pongDotRB.AddForce(startDirection);
+        spawnDot();
     }
 
     // Update is called once per frame
@@ -42,8 +45,31 @@ public class DotController : MonoBehaviour
 
     void FixedUpdate()
     {   
-        Vector2 dotVelocity = pongDotRB.velocity;
+        //Vector2 dotVelocity = pongDotRB.velocity;
+    }
 
+    void spawnDot()
+    {
+        pongDotRB.velocity = Vector2.zero;
+
+        pongDotGO.transform.position = new Vector3(0, 0, 0);
+
+        // if value is < .5, -1. else 1.
+        randX = Random.value < .5f ? -1f : 1f;
+        randY = Random.value < .5f ? Random.Range(-1f, -.5f) : 
+                Random.Range(.5f, 1f);
+
+        startDirection = new Vector2(randX, randY).normalized * speed;
+
+
+        //randX = Random.Range(-1f, 1f);
+        //randY = Random.Range(-1f, 1f);
+        //Debug.Log();
+
+        //startDirection = new Vector2(randX, randY).normalized * speed;
+
+        // keep having problems with dot moving extremely fast.
+        pongDotRB.AddForce(startDirection, ForceMode2D.Impulse);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -51,12 +77,22 @@ public class DotController : MonoBehaviour
         if (collision.gameObject.CompareTag("WallW"))
         {
             // had to use the declared scoreController to call it.
-            scoreController.scoreLeft++;
+            scoreController.scoreRight++;
+            scoreController.UpdateScore();
+
+            spawnDot();
         } else if (collision.gameObject.CompareTag("WallE"))
         {
-            scoreController.scoreRight++;
+            scoreController.scoreLeft++;
+            scoreController.UpdateScore();
+
+            spawnDot();
         }
+        
     }
 
-
 }
+
+// kept having problems with dot moving too fast. the dot speed was set to 
+// public and was set very high.
+
