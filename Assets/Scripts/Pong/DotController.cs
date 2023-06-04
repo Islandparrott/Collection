@@ -4,6 +4,7 @@
 //
 // REF
 // | How to make Pong in Unity (Complete Tutorial) 🏓💥
+//  | Had trouble with ball moving too fast. fixed by changing speed elsewhere.
 //  | https://www.youtube.com/watch?v=AcpaYq0ihaM
 
 
