@@ -35,7 +35,7 @@ public class ScoreController : MonoBehaviour
         TMPRight.text = scoreRight.ToString();
     }
 
-    void ResetScore()
+    public void ResetScore()
     {
         scoreLeft = 0;
         scoreRight = 0;

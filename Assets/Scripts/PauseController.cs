@@ -6,15 +6,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PausePongController : MonoBehaviour
+public class PauseController : MonoBehaviour
 {
-    public GameObject PongPause;
+    public GameObject PausePanel;
     public static bool isPaused = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        PongPause.SetActive(false);
+        PausePanel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -29,7 +29,7 @@ public class PausePongController : MonoBehaviour
     public void PauseHandler()
     {
         isPaused = !isPaused;
-        PongPause.SetActive(isPaused);
+        PausePanel.SetActive(isPaused);
         if (isPaused)
         {
             Time.timeScale = 0f;

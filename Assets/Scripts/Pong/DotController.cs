@@ -49,7 +49,7 @@ public class DotController : MonoBehaviour
         //Vector2 dotVelocity = pongDotRB.velocity;
     }
 
-    void spawnDot()
+    public void spawnDot()
     {
         pongDotRB.velocity = Vector2.zero;
 

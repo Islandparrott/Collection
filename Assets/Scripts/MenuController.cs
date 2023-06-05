@@ -9,8 +9,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-public class MainMenuController : MonoBehaviour
+public class MenuController : MonoBehaviour
 {
+    public PauseController pauseController;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +28,7 @@ public class MainMenuController : MonoBehaviour
     public void GoToScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+        //PauseController.isPaused = false;
     }
 
     public void QuitGame()
